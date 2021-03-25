@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>猜数字游戏</title>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="container">
+			<p>{{msg}}</p>
+		    <my-game></my-game>
+		</div>
+		<script>
+			Vue.component("my-game",{
+				data:function(){
+					return {
+						randomNum:0,
+						myInput:0,
+						result:""
+					}
+				},
+		    template:`
+				<div>
+					<input type="text" v-model.number="myInput"/>
+					<br>
+					<p>{{result}}</p>
+				</div>
+		   `,
+		    beforeMount: function () {
+				var num = Math.floor(Math.random()*100);
+				console.log(num);
+				this.randomNum = num;
+		    },
+		   
+		    watch:{
+				myInput:function(){
+					if(this.myInput==this.randomNum){
+						this.result = "恭喜：您猜对了！！";
+					}else if(this.myInput>this.randomNum){
+						this.result = "啊哦！猜大了";
+					}else{
+						this.result = "啊哦！猜小了";
+					}
+		        }
+		   }
+		  })
+		  new Vue({
+		    el:"#container",
+		    data:{
+				msg:"请输入您猜测的数据:"
+		    }
+		  })
+		</script>
+	</body>
+</html>
